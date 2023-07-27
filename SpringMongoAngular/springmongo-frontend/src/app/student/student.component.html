@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="h-100 p-5 text-bg-dark rounded-3" style="max-height: calc(100vh - 40px); overflow-y: auto;">
+        <div class="container mt-4">
+          <h3>Student Table</h3>
+          <div class="form-floating mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" (click)="toggleDropdown()"
+                  [attr.aria-expanded]="isDropdownOpen ? 'true' : 'false'">
+                  {{ searchOption || 'Search by' }}
+                </button>
+                <div class="dropdown-menu" [ngClass]="{'show': isDropdownOpen}" (click)="closeDropdown()">
+                  <a class="dropdown-item" href="#" (click)="setSearchOption('name')">Name</a>
+                  <a class="dropdown-item" href="#" (click)="setSearchOption('address')">Address</a>
+                  <a class="dropdown-item" href="#" (click)="setSearchOption('mobile')">Mobile</a>
+                </div>
+              </div>
+              <input type="text" [(ngModel)]="searchText" class="form-control" id="searchText" name="searchText"
+                placeholder="Search" (ngModelChange)="onSearch()">
+            </div>
+          </div>
+          <table class="table table-striped table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let studentItem of filterStudents()">
+                <td>{{ studentItem.studentname }}</td>
+                <td>{{ studentItem.studentaddress }}</td>
+                <td>{{ studentItem.mobile }}</td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-success btn-primary" (click)="setUpdate(studentItem)">Edit</button>
+                    <button type="button" class="btn btn-danger btn-primary" (click)="setDelete(studentItem)">Delete</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+        <div class="container mt-6">
+          <h3>Student Registration</h3>
+          <div class="form-floating mb-3">
+            <input type="text" [(ngModel)]="student.studentname" class="form-control" id="studentname" name="studentname"
+              placeholder="Enter Name" required>
+            <label for="floatingInput">Name</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" [(ngModel)]="student.studentaddress" class="form-control" id="studentaddress"
+              name="studentaddress" placeholder="Enter Address" required>
+            <label for="floatingInput">Address</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" [(ngModel)]="student.mobile" class="form-control" id="mobile" name="mobile"
+              placeholder="05XX XXX XXXX" required pattern="\d*" (input)="onMobileInput($event)">
+            <label for="floatingInput">Mobile</label>
+            <div *ngIf="showMobileWarning" class="text-danger">Please enter digits only for the mobile number.</div>
+          </div>
+          <button type="button" class="btn btn-primary mt-4" (click)="save()">Submit</button>
+        </div>
+        <div class="mt-4">
+          <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/0d/cd/7e/bellissima-e-prestigiosa.jpg?w=1200&h=-1&s=1" alt="Your Image" style="max-width: 1700px; max-height: 230px; object-fit: cover;">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
